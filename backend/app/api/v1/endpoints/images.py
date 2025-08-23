@@ -37,11 +37,10 @@ async def generate_image(
         cached_result = await cache_service.get(cache_key)
         
         if cached_result:
-            import json
-            result = json.loads(cached_result)
+            # cached_result已经是解析后的字典
             return ImageGenerationResponse(
-                final_image_url=result["final_image_url"],
-                step_images=result["step_images"],
+                final_image_url=cached_result["final_image_url"],
+                step_images=cached_result["step_images"],
                 prompt=request.prompt,
                 from_cache=True
             )
@@ -55,12 +54,11 @@ async def generate_image(
         )
         
         # 缓存结果
-        import json
         cache_data = {
             "final_image_url": result["final_image_url"],
             "step_images": result["step_images"]
         }
-        await cache_service.set(cache_key, json.dumps(cache_data))
+        await cache_service.set(cache_key, cache_data)
         
         return ImageGenerationResponse(
             final_image_url=result["final_image_url"],

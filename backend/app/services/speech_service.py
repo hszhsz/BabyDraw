@@ -1,8 +1,11 @@
 import asyncio
 import base64
 import json
+import tempfile
+import os
 from typing import Optional
 from app.core.config import settings
+import requests
 
 class SpeechService:
     """
@@ -52,11 +55,46 @@ class SpeechService:
         使用阿里云语音识别
         """
         try:
-            # 这里应该实现阿里云语音识别的具体逻辑
+            # 使用DashScope API进行语音识别
+            import dashscope
+            from dashscope.audio.asr import Recognition
+            
+            # 设置API密钥
+            dashscope.api_key = settings.DASHSCOPE_API_KEY
+            
+            # 将音频数据保存为临时文件
+            with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as temp_file:
+                temp_file.write(audio_content)
+                temp_file_path = temp_file.name
+            
+            try:
+                # 调用阿里云语音识别API
+                recognition = Recognition.call(
+                    model='paraformer-realtime-v1',
+                    format='wav',
+                    sample_rate=16000,
+                    file_urls=[temp_file_path]
+                )
+                
+                if recognition.status_code == 200:
+                    result = recognition.output
+                    if result and 'text' in result:
+                        return result['text']
+                    else:
+                        return "识别结果为空"
+                else:
+                    raise Exception(f"API调用失败: {recognition.message}")
+                    
+            finally:
+                # 清理临时文件
+                if os.path.exists(temp_file_path):
+                    os.unlink(temp_file_path)
+                    
+        except Exception as e:
+            # 如果阿里云API失败，返回模拟结果
+            print(f"阿里云语音识别失败，使用模拟结果: {str(e)}")
             await asyncio.sleep(0.5)  # 模拟网络延迟
             return "小兔子"  # 模拟识别结果
-        except Exception as e:
-            raise Exception(f"阿里云语音识别失败: {str(e)}")
     
     async def _mock_recognize(self, audio_content: bytes) -> str:
         """

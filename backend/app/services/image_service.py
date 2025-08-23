@@ -16,7 +16,7 @@ class ImageService:
         """
         根据配置选择可用的图像生成服务提供商
         """
-        if settings.DASHSCOPE_API_KEY:
+        if settings.DASHSCOPE_API_KEY and settings.DASHSCOPE_API_KEY.strip():
             return "tongyi"  # 通义万相
         else:
             return "mock"  # 开发阶段使用模拟服务
@@ -39,28 +39,9 @@ class ImageService:
         """
         使用通义万相生成图像
         """
-        try:
-            # 这里应该实现通义万相API的具体调用逻辑
-            # 需要调用DashScope API
-            await asyncio.sleep(2.0)  # 模拟生成时间
-            
-            # 模拟返回结果
-            base_url = "https://example.com/images"
-            final_image = f"{base_url}/final_{prompt[:10]}.png"
-            step_images = [
-                f"{base_url}/step1_{prompt[:10]}.png",
-                f"{base_url}/step2_{prompt[:10]}.png",
-                f"{base_url}/step3_{prompt[:10]}.png",
-                f"{base_url}/step4_{prompt[:10]}.png"
-            ][:steps]
-            
-            return {
-                "final_image_url": final_image,
-                "step_images": step_images,
-                "provider": "tongyi"
-            }
-        except Exception as e:
-            raise Exception(f"通义万相图像生成失败: {str(e)}")
+        # TODO: 实现通义万相API调用
+        # 由于通义万相API尚未实现，暂时使用mock数据
+        return await self._mock_generate(prompt, style, steps)
     
     async def _mock_generate(self, prompt: str, style: str, steps: int) -> Dict[str, any]:
         """

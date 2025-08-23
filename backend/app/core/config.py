@@ -50,6 +50,7 @@ class Settings(BaseSettings):
     
     # 缓存设置
     CACHE_TTL: int = 3600  # 1小时
+    CACHE_TTL_SECONDS: int = 3600  # 1小时，用于缓存服务
     
     # 日志设置
     LOG_LEVEL: str = "INFO"

@@ -51,6 +51,9 @@ export default function AppPage() {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
         setAudioBlob(audioBlob);
         stream.getTracks().forEach(track => track.stop());
+        
+        // 自动开始语音识别和画作生成
+        handleAutoSpeechToDrawing(audioBlob);
       };
 
       mediaRecorder.start();
@@ -65,6 +68,117 @@ export default function AppPage() {
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
+    }
+  };
+
+  // 自动处理语音识别和生成画作
+  const handleAutoSpeechToDrawing = async (audioBlob: Blob) => {
+    clientLog.info('开始自动语音识别和画作生成');
+    setIsProcessingAudio(true);
+    
+    try {
+      // 生成音频哈希
+      const audioHash = await generateAudioHash(audioBlob);
+      
+      // 检查缓存
+      const cachedResult = getCachedSpeech(audioHash);
+      let recognizedText = '';
+      
+      if (cachedResult) {
+        console.log('使用缓存的语音识别结果');
+        recognizedText = cachedResult;
+        setTextInput(recognizedText);
+      } else {
+        // 语音识别
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'recording.wav');
+
+        const response = await fetch('http://localhost:8000/api/v1/speech/recognize', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('语音识别失败');
+        }
+
+        const data = await response.json();
+        recognizedText = data.text;
+        clientLog.info('语音识别成功', { recognizedText });
+        setTextInput(recognizedText);
+        
+        // 存储到缓存
+        setCachedSpeech(audioHash, recognizedText);
+      }
+      
+      setIsProcessingAudio(false);
+      
+      // 如果识别到文字，自动开始生成画作
+      if (recognizedText.trim()) {
+        await handleGenerateDrawingWithText(recognizedText.trim());
+      }
+    } catch (error) {
+      clientLog.error('自动语音识别失败', { error: error instanceof Error ? error.message : String(error) });
+      setIsProcessingAudio(false);
+      alert('语音识别失败，请重试');
+    }
+  };
+
+  // 根据文字生成画作
+  const handleGenerateDrawingWithText = async (text: string) => {
+    clientLog.info('开始生成画作', { prompt: text });
+    setIsGenerating(true);
+    
+    try {
+      // 检查缓存
+      const cachedResult = getCachedDrawing(text, 'default');
+      if (cachedResult) {
+        console.log('使用缓存的绘画结果');
+        setCurrentDrawing(cachedResult);
+        setIsGenerating(false);
+        return;
+      }
+
+      const response = await fetch('http://localhost:8000/api/v1/images/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          prompt: text,
+          style: '简笔画',
+          steps: 4
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('生成绘画失败');
+      }
+
+      const imageResult = await response.json();
+      // 转换为Drawing格式
+      const drawing = {
+        id: Date.now(), // 临时ID
+        title: text,
+        description: `AI生成的${imageResult.style}`,
+        prompt: imageResult.prompt,
+        image_url: imageResult.final_image_url,
+        step_images: imageResult.step_images,
+        style: '简笔画',
+        steps: 4,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+      clientLog.info('画作生成成功', { prompt: text, fromCache: imageResult.from_cache });
+      setCurrentDrawing(drawing);
+      
+      // 存储到缓存
+      setCachedDrawing(text, 'default', drawing);
+    } catch (error) {
+      clientLog.error('生成画作失败', { error: error instanceof Error ? error.message : String(error), prompt: text });
+      alert('生成绘画失败，请重试');
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -89,7 +203,7 @@ export default function AppPage() {
       const formData = new FormData();
       formData.append('audio', audioBlob, 'recording.wav');
 
-      const response = await fetch('http://localhost:8000/api/speech-to-text', {
+      const response = await fetch('http://localhost:8000/api/v1/speech/recognize', {
         method: 'POST',
         body: formData,
       });
@@ -130,20 +244,37 @@ export default function AppPage() {
         return;
       }
 
-      const response = await fetch('http://localhost:8000/api/generate-drawing', {
+      const response = await fetch('http://localhost:8000/api/v1/images/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt: textInput }),
+        body: JSON.stringify({ 
+          prompt: textInput,
+          style: '简笔画',
+          steps: 4
+        }),
       });
 
       if (!response.ok) {
         throw new Error('生成绘画失败');
       }
 
-      const drawing = await response.json();
-      clientLog.info('画作生成成功', { drawingId: drawing.id, prompt: textInput });
+      const imageResult = await response.json();
+      // 转换为Drawing格式
+      const drawing = {
+        id: Date.now(), // 临时ID
+        title: textInput,
+        description: `AI生成的${imageResult.style}`,
+        prompt: imageResult.prompt,
+        image_url: imageResult.final_image_url,
+        step_images: imageResult.step_images,
+        style: '简笔画',
+        steps: 4,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+      clientLog.info('画作生成成功', { prompt: textInput, fromCache: imageResult.from_cache });
       setCurrentDrawing(drawing);
       
       // 存储到缓存
@@ -251,7 +382,7 @@ export default function AppPage() {
                   <div className="text-center text-gray-500">
                     <div className="text-6xl mb-4">🎨</div>
                     <p className="text-lg font-medium">等待创作...</p>
-                    <p className="text-sm">输入描述或录制语音来生成画作</p>
+                    <p className="text-sm">录制语音后将自动开始作画，或切换到文字输入模式</p>
                   </div>
                 )}
               </div>
@@ -320,11 +451,18 @@ export default function AppPage() {
                   </div>
                   
                   <p className="text-center text-gray-600">
-                    {isRecording ? '🔴 正在录音，再次点击停止' : '点击麦克风开始录音'}
+                    {isRecording 
+                      ? '🔴 正在录音，再次点击停止并开始作画' 
+                      : isProcessingAudio 
+                        ? '🎯 正在识别语音并生成画作...' 
+                        : isGenerating 
+                          ? '🎨 AI正在创作中...' 
+                          : '点击麦克风开始录音，录音结束后将自动开始作画'
+                    }
                   </p>
                   
-                  {audioBlob && (
-                    <div className="flex justify-center space-x-4">
+                  {audioBlob && !isProcessingAudio && !isGenerating && (
+                    <div className="flex justify-center">
                       <button
                         onClick={playAudio}
                         className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center space-x-2"
@@ -332,13 +470,12 @@ export default function AppPage() {
                         <Volume2 className="w-4 h-4" />
                         <span>播放录音</span>
                       </button>
-                      <button
-                        onClick={handleSpeechRecognition}
-                        disabled={isProcessingAudio}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 flex items-center space-x-2"
-                      >
-                        <span>{isProcessingAudio ? '识别中...' : '转换文字'}</span>
-                      </button>
+                    </div>
+                  )}
+                  
+                  {(isProcessingAudio || isGenerating) && (
+                    <div className="flex justify-center">
+                      <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
                     </div>
                   )}
                 </div>
