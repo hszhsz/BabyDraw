@@ -346,7 +346,10 @@ export default function AppPage() {
               <span>历史记录</span>
             </button>
             <button
-              onClick={clearCache}
+              onClick={() => {
+                console.log('清除缓存按钮被点击');
+                clearCache();
+              }}
               className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors flex items-center space-x-2"
             >
               <Trash2 className="w-4 h-4" />

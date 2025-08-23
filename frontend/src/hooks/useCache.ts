@@ -124,13 +124,29 @@ export function useCache(): UseCacheReturn {
   // 清除所有缓存
   const clearCache = useCallback((): void => {
     try {
+      console.log('开始清除缓存...')
       localStorage.removeItem(DRAWING_CACHE_KEY)
       localStorage.removeItem(SPEECH_CACHE_KEY)
-      updateCacheStats()
+      
+      // 直接重置缓存统计
+      setCacheStats({
+        total_items: 0,
+        total_size_mb: 0,
+        hit_rate: 0,
+        last_cleanup: new Date().toISOString(),
+        total_count: 0,
+        active_count: 0,
+        expired_count: 0
+      })
+      
+      console.log('缓存清除完成')
+      // 添加用户反馈
+      alert('缓存已清除！')
     } catch (error) {
       console.error('Error clearing cache:', error)
+      alert('清除缓存失败：' + error)
     }
-  }, [])
+  }, [setCacheStats])
 
   // 清理过期缓存
   const cleanExpiredCache = useCallback((): void => {
@@ -209,7 +225,7 @@ export function useCache(): UseCacheReturn {
     } catch (error) {
       console.error('Error updating cache stats:', error)
     }
-  }, [])
+  }, [setCacheStats])
 
   // 获取缓存统计
   const getCacheStats = useCallback((): CacheStats => {
