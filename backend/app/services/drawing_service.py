@@ -157,11 +157,9 @@ class DrawingService:
                     "description": drawing.description,
                     "prompt": drawing.prompt,
                     "image_url": drawing.image_url,
-                    "step_images": drawing.step_images,
-                    "style": drawing.style,
-                    "steps": drawing.steps,
-                    "created_at": drawing.created_at.isoformat(),
-                    "updated_at": drawing.updated_at.isoformat()
+                    "steps_images": drawing.step_images,
+                    "user_id": drawing.user_id,
+                    "created_at": drawing.created_at.isoformat()
                 }
                 for drawing in drawings
             ]
@@ -184,12 +182,9 @@ class DrawingService:
                     "description": drawing.description,
                     "prompt": drawing.prompt,
                     "image_url": drawing.image_url,
-                    "step_images": drawing.step_images,
-                    "style": drawing.style,
-                    "steps": drawing.steps,
+                    "steps_images": drawing.step_images,
                     "user_id": drawing.user_id,
-                    "created_at": drawing.created_at.isoformat(),
-                    "updated_at": drawing.updated_at.isoformat()
+                    "created_at": drawing.created_at.isoformat()
                 }
                 for drawing in drawings
             ]

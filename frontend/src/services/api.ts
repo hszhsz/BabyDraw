@@ -182,18 +182,16 @@ class ApiService {
   // 历史记录管理
   async getDrawingHistory(page: number = 1, pageSize: number = 10, filter?: HistoryFilter): Promise<ApiResponse<DrawingHistory>> {
     const params = new URLSearchParams({
-      page: page.toString(),
-      pageSize: pageSize.toString(),
+      skip: ((page - 1) * pageSize).toString(),
+      limit: pageSize.toString(),
       ...(filter?.style && { style: filter.style }),
-      ...(filter?.date_from && { date_from: filter.date_from }),
-      ...(filter?.date_to && { date_to: filter.date_to }),
       ...(filter?.search && { search: filter.search })
     })
-    return this.request<DrawingHistory>(`/api/drawings/history?${params}`)
+    return this.request<DrawingHistory>(`/drawings/?${params}`)
   }
 
   async getDrawingById(id: number): Promise<ApiResponse<Drawing>> {
-    return this.request<Drawing>(`/api/drawings/${id}`)
+    return this.request<Drawing>(`/drawings/${id}`)
   }
 
   // 健康检查

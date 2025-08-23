@@ -48,7 +48,7 @@ async def create_drawing(
 async def get_drawings(
     user_id: Optional[str] = Query(None),
     limit: int = Query(20, le=100),
-    offset: int = Query(0, ge=0),
+    skip: int = Query(0, ge=0),
     db: Session = Depends(get_db)
 ):
     """
@@ -56,11 +56,17 @@ async def get_drawings(
     """
     try:
         drawing_service = DrawingService(db)
-        drawings = await drawing_service.get_drawings(
-            user_id=user_id,
-            limit=limit,
-            offset=offset
-        )
+        if user_id:
+            drawings = drawing_service.get_drawings_by_user(
+                user_id=user_id,
+                skip=skip,
+                limit=limit
+            )
+        else:
+            drawings = drawing_service.get_all_drawings(
+                skip=skip,
+                limit=limit
+            )
         return drawings
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"获取画作列表失败: {str(e)}")

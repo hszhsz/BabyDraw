@@ -12,12 +12,13 @@ interface DrawingHistoryProps {
 }
 
 export function DrawingHistory({ onSelectDrawing, className }: DrawingHistoryProps) {
-  const [history, setHistory] = useState<DrawingHistoryType | null>(null)
+  const [drawings, setDrawings] = useState<Drawing[]>([])
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [filter, setFilter] = useState<HistoryFilter>({})
   const [showFilter, setShowFilter] = useState(false)
   const [searchKeyword, setSearchKeyword] = useState('')
+  const [totalCount, setTotalCount] = useState(0)
 
   const pageSize = 12
 
@@ -26,10 +27,20 @@ export function DrawingHistory({ onSelectDrawing, className }: DrawingHistoryPro
     try {
       setLoading(true)
       const response = await apiService.getDrawingHistory(page, pageSize, currentFilter)
-      setHistory(response.data || null)
+      if (response.success && response.data) {
+        const drawingsData = Array.isArray(response.data) ? response.data : []
+        setDrawings(drawingsData)
+        // 由于后端没有返回总数，我们假设如果返回的数据少于pageSize，说明已经到最后一页
+        setTotalCount(drawingsData.length === pageSize ? (page * pageSize + 1) : ((page - 1) * pageSize + drawingsData.length))
+      } else {
+        setDrawings([])
+        setTotalCount(0)
+      }
       setCurrentPage(page)
     } catch (error) {
       console.error('Failed to load drawing history:', error)
+      setDrawings([])
+      setTotalCount(0)
     } finally {
       setLoading(false)
     }
@@ -189,7 +200,7 @@ export function DrawingHistory({ onSelectDrawing, className }: DrawingHistoryPro
           <div className="flex items-center justify-center py-12">
             <div className="text-gray-500">加载中...</div>
           </div>
-        ) : !history || history.drawings.length === 0 ? (
+        ) : drawings.length === 0 ? (
           <div className="text-center py-12">
             <History className="w-12 h-12 text-gray-300 mx-auto mb-4" />
             <p className="text-gray-500">还没有绘画历史</p>
@@ -199,7 +210,7 @@ export function DrawingHistory({ onSelectDrawing, className }: DrawingHistoryPro
           <>
             {/* 绘画网格 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-6">
-              {history.drawings.map((drawing) => (
+              {drawings.map((drawing) => (
                 <div
                   key={drawing.id}
                   className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
@@ -260,7 +271,7 @@ export function DrawingHistory({ onSelectDrawing, className }: DrawingHistoryPro
             </div>
 
             {/* 分页 */}
-            {history.total > pageSize && (
+            {totalCount > pageSize && (
               <div className="flex items-center justify-center gap-2">
                 <button
                   onClick={() => loadHistory(currentPage - 1)}
@@ -271,12 +282,12 @@ export function DrawingHistory({ onSelectDrawing, className }: DrawingHistoryPro
                 </button>
                 
                 <span className="text-sm text-gray-600">
-                  第 {currentPage} 页，共 {Math.ceil(history.total / pageSize)} 页
+                  第 {currentPage} 页，共 {Math.ceil(totalCount / pageSize)} 页
                 </span>
                 
                 <button
                   onClick={() => loadHistory(currentPage + 1)}
-                  disabled={currentPage >= Math.ceil(history.total / pageSize)}
+                  disabled={currentPage >= Math.ceil(totalCount / pageSize)}
                   className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-400 rounded transition-colors"
                 >
                   下一页

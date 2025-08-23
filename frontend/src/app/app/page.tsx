@@ -125,19 +125,23 @@ export default function AppPage() {
   };
 
   // 根据文字生成画作
-  const handleGenerateDrawingWithText = async (text: string) => {
-    clientLog.info('开始生成画作', { prompt: text });
+  const handleGenerateDrawingWithText = async (text: string, forceRefresh: boolean = false) => {
+    clientLog.info('开始生成画作', { prompt: text, forceRefresh });
     setIsGenerating(true);
     
     try {
-      // 检查缓存
-      const cachedResult = getCachedDrawing(text, 'default');
-      if (cachedResult) {
-        console.log('使用缓存的绘画结果');
-        setCurrentDrawing(cachedResult);
-        setIsGenerating(false);
-        return;
-      }
+      // 暂时禁用缓存功能，每次都调用大模型生成
+      // if (!forceRefresh) {
+      //   const cachedResult = getCachedDrawing(text, 'default');
+      //   if (cachedResult) {
+      //     console.log('使用缓存的绘画结果');
+      //     setCurrentDrawing(cachedResult);
+      //     setIsGenerating(false);
+      //     return;
+      //   }
+      // } else {
+      //   console.log('强制刷新，跳过缓存检查');
+      // }
 
       const response = await fetch('http://localhost:8000/api/v1/images/generate', {
         method: 'POST',
@@ -169,11 +173,11 @@ export default function AppPage() {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
-      clientLog.info('画作生成成功', { prompt: text, fromCache: imageResult.from_cache });
+      clientLog.info('画作生成成功', { prompt: text, fromCache: false });
       setCurrentDrawing(drawing);
       
-      // 存储到缓存
-      setCachedDrawing(text, 'default', drawing);
+      // 暂时禁用缓存存储
+      // setCachedDrawing(text, 'default', drawing);
     } catch (error) {
       clientLog.error('生成画作失败', { error: error instanceof Error ? error.message : String(error), prompt: text });
       alert('生成绘画失败，请重试');
@@ -226,23 +230,27 @@ export default function AppPage() {
     }
   };
 
-  const handleGenerateDrawing = async () => {
+  const generateDrawingInternal = async (forceRefresh: boolean = false) => {
     if (!textInput.trim()) {
       alert('请输入描述或录制语音');
       return;
     }
 
-    clientLog.info('开始生成画作', { prompt: textInput });
+    clientLog.info('开始生成画作', { prompt: textInput, forceRefresh });
     setIsGenerating(true);
     try {
-      // 检查缓存
-      const cachedResult = getCachedDrawing(textInput.trim(), 'default');
-      if (cachedResult) {
-        console.log('使用缓存的绘画结果');
-        setCurrentDrawing(cachedResult);
-        setIsGenerating(false);
-        return;
-      }
+      // 暂时禁用缓存功能，每次都调用大模型生成
+      // if (!forceRefresh) {
+      //   const cachedResult = getCachedDrawing(textInput.trim(), 'default');
+      //   if (cachedResult) {
+      //     console.log('使用缓存的绘画结果');
+      //     setCurrentDrawing(cachedResult);
+      //     setIsGenerating(false);
+      //     return;
+      //   }
+      // } else {
+      //   console.log('强制刷新，跳过缓存检查');
+      // }
 
       const response = await fetch('http://localhost:8000/api/v1/images/generate', {
         method: 'POST',
@@ -274,11 +282,11 @@ export default function AppPage() {
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
       };
-      clientLog.info('画作生成成功', { prompt: textInput, fromCache: imageResult.from_cache });
+      clientLog.info('画作生成成功', { prompt: textInput, fromCache: false });
       setCurrentDrawing(drawing);
       
-      // 存储到缓存
-      setCachedDrawing(textInput.trim(), 'default', drawing);
+      // 暂时禁用缓存存储
+      // setCachedDrawing(textInput.trim(), 'default', drawing);
     } catch (error) {
       clientLog.error('生成画作失败', { error: error instanceof Error ? error.message : String(error), prompt: textInput });
       alert('生成绘画失败，请重试');
@@ -286,6 +294,9 @@ export default function AppPage() {
       setIsGenerating(false);
     }
   };
+
+  const handleGenerateDrawing = () => generateDrawingInternal(false);
+  const handleForceRefresh = () => generateDrawingInternal(true);
 
   const playAudio = () => {
     if (audioBlob) {
