@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/Users/heshaozhong/code/BabyDraw/frontend/logs/.9a4edce2c88ee30dc361b4648e0b10ff356d0df9-audit.json",
+    "files": [
+        {
+            "date": 1755917399779,
+            "name": "/Users/heshaozhong/code/BabyDraw/frontend/logs/frontend-error-2025-08-23.log",
+            "hash": "608b89ba4939b3665fb6ed40ab270b9e35faa527de4727af9673aec1b40003a7"
+        }
+    ],
+    "hashType": "sha256"
+}

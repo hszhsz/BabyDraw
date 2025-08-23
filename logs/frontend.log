@@ -1,0 +1,598 @@
+
+> frontend@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.5.0 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.31.21:3000
+
+ ✓ Starting...
+ ✓ Ready in 1304ms
+ ○ Compiling /app ...
+ ✓ Compiled /app in 5.2s
+ ⨯ ./node_modules/file-stream-rotator/FileStreamRotator.js:13:10
+Module not found: Can't resolve 'fs'
+[0m [90m 11 |[39m [90m * Module dependencies.[39m
+ [90m 12 |[39m [90m */[39m
+[31m[1m>[22m[39m[90m 13 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 14 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 15 |[39m [36mvar[39m moment [33m=[39m require([32m'moment'[39m)[33m;[39m
+ [90m 16 |[39m [36mvar[39m crypto [33m=[39m require([32m'crypto'[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston-daily-rotate-file/daily-rotate-file.js:1:12
+Module not found: Can't resolve 'fs'
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mconst[39m fs [33m=[39m require([32m"fs"[39m)[33m;[39m
+ [90m   |[39m            [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m [36mconst[39m os [33m=[39m require([32m"os"[39m)[33m;[39m
+ [90m 3 |[39m [36mconst[39m path [33m=[39m require([32m"path"[39m)[33m;[39m
+ [90m 4 |[39m [36mconst[39m util [33m=[39m require([32m"util"[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/tail-file.js:10:10
+Module not found: Can't resolve 'fs'
+[0m [90m  8 |[39m [32m'use strict'[39m[33m;[39m
+ [90m  9 |[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 11 |[39m [36mvar[39m _require [33m=[39m require([32m'string_decoder'[39m)[33m,[39m
+ [90m 12 |[39m   [33mStringDecoder[39m [33m=[39m _require[33m.[39m[33mStringDecoder[39m[33m;[39m
+ [90m 13 |[39m [36mvar[39m _require2 [33m=[39m require([32m'readable-stream'[39m)[33m,[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/tail-file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/transports/file.js:25:10
+Module not found: Can't resolve 'fs'
+[0m [90m 23 |[39m [36mfunction[39m _inherits(t[33m,[39m e) { [36mif[39m ([32m"function"[39m [33m!=[39m [36mtypeof[39m e [33m&&[39m [36mnull[39m [33m!==[39m e) [36mthrow[39m [36mnew[39m [33mTypeError[39m([32m"Super expression must either be null or a function"[39m)[33m;[39m t[33m.[39mprototype [33m=[39m [33mObject[39m[33m.[39mcreate(e [33m&&[39m e[33m.[39mprototype[33m,[39m { constructor[33m:[39m { value[33m:[39m t[33m,[39m writable[33m:[39m [33m![39m[35m0[39m[33m,[39m configurable[33m:[39m [33m![39m[35m0[39m } })[33m,[39m [33mObject[39m[33m.[39mdefineProperty(t[33m,[39m [32m"prototype"[39m[33m,[39m { writable[33m:[39m [33m![39m[35m1[39m })[33m,[39m e [33m&&[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+ [90m 24 |[39m [36mfunction[39m _setPrototypeOf(t[33m,[39m e) { [36mreturn[39m _setPrototypeOf [33m=[39m [33mObject[39m[33m.[39msetPrototypeOf [33m?[39m [33mObject[39m[33m.[39msetPrototypeOf[33m.[39mbind() [33m:[39m [36mfunction[39m (t[33m,[39m e) { [36mreturn[39m t[33m.[39m__proto__ [33m=[39m e[33m,[39m t[33m;[39m }[33m,[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+[31m[1m>[22m[39m[90m 25 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 26 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 27 |[39m [36mvar[39m asyncSeries [33m=[39m require([32m'async/series'[39m)[33m;[39m
+ [90m 28 |[39m [36mvar[39m zlib [33m=[39m require([32m'zlib'[39m)[33m;[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1485ms
+ GET /app 500 in 6962ms
+ ✓ Compiled /favicon.ico in 287ms
+ GET /favicon.ico 500 in 317ms
+ ✓ Compiled / in 428ms
+ GET / 200 in 996ms
+ GET /favicon.ico?favicon.0b3bf435.ico 500 in 230ms
+ ⨯ ./node_modules/file-stream-rotator/FileStreamRotator.js:13:10
+Module not found: Can't resolve 'fs'
+[0m [90m 11 |[39m [90m * Module dependencies.[39m
+ [90m 12 |[39m [90m */[39m
+[31m[1m>[22m[39m[90m 13 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 14 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 15 |[39m [36mvar[39m moment [33m=[39m require([32m'moment'[39m)[33m;[39m
+ [90m 16 |[39m [36mvar[39m crypto [33m=[39m require([32m'crypto'[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston-daily-rotate-file/daily-rotate-file.js:1:12
+Module not found: Can't resolve 'fs'
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mconst[39m fs [33m=[39m require([32m"fs"[39m)[33m;[39m
+ [90m   |[39m            [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m [36mconst[39m os [33m=[39m require([32m"os"[39m)[33m;[39m
+ [90m 3 |[39m [36mconst[39m path [33m=[39m require([32m"path"[39m)[33m;[39m
+ [90m 4 |[39m [36mconst[39m util [33m=[39m require([32m"util"[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/tail-file.js:10:10
+Module not found: Can't resolve 'fs'
+[0m [90m  8 |[39m [32m'use strict'[39m[33m;[39m
+ [90m  9 |[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 11 |[39m [36mvar[39m _require [33m=[39m require([32m'string_decoder'[39m)[33m,[39m
+ [90m 12 |[39m   [33mStringDecoder[39m [33m=[39m _require[33m.[39m[33mStringDecoder[39m[33m;[39m
+ [90m 13 |[39m [36mvar[39m _require2 [33m=[39m require([32m'readable-stream'[39m)[33m,[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/tail-file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/transports/file.js:25:10
+Module not found: Can't resolve 'fs'
+[0m [90m 23 |[39m [36mfunction[39m _inherits(t[33m,[39m e) { [36mif[39m ([32m"function"[39m [33m!=[39m [36mtypeof[39m e [33m&&[39m [36mnull[39m [33m!==[39m e) [36mthrow[39m [36mnew[39m [33mTypeError[39m([32m"Super expression must either be null or a function"[39m)[33m;[39m t[33m.[39mprototype [33m=[39m [33mObject[39m[33m.[39mcreate(e [33m&&[39m e[33m.[39mprototype[33m,[39m { constructor[33m:[39m { value[33m:[39m t[33m,[39m writable[33m:[39m [33m![39m[35m0[39m[33m,[39m configurable[33m:[39m [33m![39m[35m0[39m } })[33m,[39m [33mObject[39m[33m.[39mdefineProperty(t[33m,[39m [32m"prototype"[39m[33m,[39m { writable[33m:[39m [33m![39m[35m1[39m })[33m,[39m e [33m&&[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+ [90m 24 |[39m [36mfunction[39m _setPrototypeOf(t[33m,[39m e) { [36mreturn[39m _setPrototypeOf [33m=[39m [33mObject[39m[33m.[39msetPrototypeOf [33m?[39m [33mObject[39m[33m.[39msetPrototypeOf[33m.[39mbind() [33m:[39m [36mfunction[39m (t[33m,[39m e) { [36mreturn[39m t[33m.[39m__proto__ [33m=[39m e[33m,[39m t[33m;[39m }[33m,[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+[31m[1m>[22m[39m[90m 25 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 26 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 27 |[39m [36mvar[39m asyncSeries [33m=[39m require([32m'async/series'[39m)[33m;[39m
+ [90m 28 |[39m [36mvar[39m zlib [33m=[39m require([32m'zlib'[39m)[33m;[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /favicon.ico?favicon.0b3bf435.ico 500 in 209ms
+ GET /app 500 in 297ms
+ ⨯ ./node_modules/file-stream-rotator/FileStreamRotator.js:13:10
+Module not found: Can't resolve 'fs'
+[0m [90m 11 |[39m [90m * Module dependencies.[39m
+ [90m 12 |[39m [90m */[39m
+[31m[1m>[22m[39m[90m 13 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 14 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 15 |[39m [36mvar[39m moment [33m=[39m require([32m'moment'[39m)[33m;[39m
+ [90m 16 |[39m [36mvar[39m crypto [33m=[39m require([32m'crypto'[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston-daily-rotate-file/daily-rotate-file.js:1:12
+Module not found: Can't resolve 'fs'
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mconst[39m fs [33m=[39m require([32m"fs"[39m)[33m;[39m
+ [90m   |[39m            [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m [36mconst[39m os [33m=[39m require([32m"os"[39m)[33m;[39m
+ [90m 3 |[39m [36mconst[39m path [33m=[39m require([32m"path"[39m)[33m;[39m
+ [90m 4 |[39m [36mconst[39m util [33m=[39m require([32m"util"[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/tail-file.js:10:10
+Module not found: Can't resolve 'fs'
+[0m [90m  8 |[39m [32m'use strict'[39m[33m;[39m
+ [90m  9 |[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 11 |[39m [36mvar[39m _require [33m=[39m require([32m'string_decoder'[39m)[33m,[39m
+ [90m 12 |[39m   [33mStringDecoder[39m [33m=[39m _require[33m.[39m[33mStringDecoder[39m[33m;[39m
+ [90m 13 |[39m [36mvar[39m _require2 [33m=[39m require([32m'readable-stream'[39m)[33m,[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/tail-file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/transports/file.js:25:10
+Module not found: Can't resolve 'fs'
+[0m [90m 23 |[39m [36mfunction[39m _inherits(t[33m,[39m e) { [36mif[39m ([32m"function"[39m [33m!=[39m [36mtypeof[39m e [33m&&[39m [36mnull[39m [33m!==[39m e) [36mthrow[39m [36mnew[39m [33mTypeError[39m([32m"Super expression must either be null or a function"[39m)[33m;[39m t[33m.[39mprototype [33m=[39m [33mObject[39m[33m.[39mcreate(e [33m&&[39m e[33m.[39mprototype[33m,[39m { constructor[33m:[39m { value[33m:[39m t[33m,[39m writable[33m:[39m [33m![39m[35m0[39m[33m,[39m configurable[33m:[39m [33m![39m[35m0[39m } })[33m,[39m [33mObject[39m[33m.[39mdefineProperty(t[33m,[39m [32m"prototype"[39m[33m,[39m { writable[33m:[39m [33m![39m[35m1[39m })[33m,[39m e [33m&&[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+ [90m 24 |[39m [36mfunction[39m _setPrototypeOf(t[33m,[39m e) { [36mreturn[39m _setPrototypeOf [33m=[39m [33mObject[39m[33m.[39msetPrototypeOf [33m?[39m [33mObject[39m[33m.[39msetPrototypeOf[33m.[39mbind() [33m:[39m [36mfunction[39m (t[33m,[39m e) { [36mreturn[39m t[33m.[39m__proto__ [33m=[39m e[33m,[39m t[33m;[39m }[33m,[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+[31m[1m>[22m[39m[90m 25 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 26 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 27 |[39m [36mvar[39m asyncSeries [33m=[39m require([32m'async/series'[39m)[33m;[39m
+ [90m 28 |[39m [36mvar[39m zlib [33m=[39m require([32m'zlib'[39m)[33m;[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /app 500 in 252ms
+ GET /favicon.ico 500 in 214ms
+ ⨯ ./node_modules/file-stream-rotator/FileStreamRotator.js:13:10
+Module not found: Can't resolve 'fs'
+[0m [90m 11 |[39m [90m * Module dependencies.[39m
+ [90m 12 |[39m [90m */[39m
+[31m[1m>[22m[39m[90m 13 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 14 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 15 |[39m [36mvar[39m moment [33m=[39m require([32m'moment'[39m)[33m;[39m
+ [90m 16 |[39m [36mvar[39m crypto [33m=[39m require([32m'crypto'[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston-daily-rotate-file/daily-rotate-file.js:1:12
+Module not found: Can't resolve 'fs'
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mconst[39m fs [33m=[39m require([32m"fs"[39m)[33m;[39m
+ [90m   |[39m            [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m [36mconst[39m os [33m=[39m require([32m"os"[39m)[33m;[39m
+ [90m 3 |[39m [36mconst[39m path [33m=[39m require([32m"path"[39m)[33m;[39m
+ [90m 4 |[39m [36mconst[39m util [33m=[39m require([32m"util"[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/tail-file.js:10:10
+Module not found: Can't resolve 'fs'
+[0m [90m  8 |[39m [32m'use strict'[39m[33m;[39m
+ [90m  9 |[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 11 |[39m [36mvar[39m _require [33m=[39m require([32m'string_decoder'[39m)[33m,[39m
+ [90m 12 |[39m   [33mStringDecoder[39m [33m=[39m _require[33m.[39m[33mStringDecoder[39m[33m;[39m
+ [90m 13 |[39m [36mvar[39m _require2 [33m=[39m require([32m'readable-stream'[39m)[33m,[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/tail-file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/transports/file.js:25:10
+Module not found: Can't resolve 'fs'
+[0m [90m 23 |[39m [36mfunction[39m _inherits(t[33m,[39m e) { [36mif[39m ([32m"function"[39m [33m!=[39m [36mtypeof[39m e [33m&&[39m [36mnull[39m [33m!==[39m e) [36mthrow[39m [36mnew[39m [33mTypeError[39m([32m"Super expression must either be null or a function"[39m)[33m;[39m t[33m.[39mprototype [33m=[39m [33mObject[39m[33m.[39mcreate(e [33m&&[39m e[33m.[39mprototype[33m,[39m { constructor[33m:[39m { value[33m:[39m t[33m,[39m writable[33m:[39m [33m![39m[35m0[39m[33m,[39m configurable[33m:[39m [33m![39m[35m0[39m } })[33m,[39m [33mObject[39m[33m.[39mdefineProperty(t[33m,[39m [32m"prototype"[39m[33m,[39m { writable[33m:[39m [33m![39m[35m1[39m })[33m,[39m e [33m&&[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+ [90m 24 |[39m [36mfunction[39m _setPrototypeOf(t[33m,[39m e) { [36mreturn[39m _setPrototypeOf [33m=[39m [33mObject[39m[33m.[39msetPrototypeOf [33m?[39m [33mObject[39m[33m.[39msetPrototypeOf[33m.[39mbind() [33m:[39m [36mfunction[39m (t[33m,[39m e) { [36mreturn[39m t[33m.[39m__proto__ [33m=[39m e[33m,[39m t[33m;[39m }[33m,[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+[31m[1m>[22m[39m[90m 25 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 26 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 27 |[39m [36mvar[39m asyncSeries [33m=[39m require([32m'async/series'[39m)[33m;[39m
+ [90m 28 |[39m [36mvar[39m zlib [33m=[39m require([32m'zlib'[39m)[33m;[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /app 500 in 164ms
+ GET /favicon.ico 500 in 214ms
+ ⨯ ./node_modules/file-stream-rotator/FileStreamRotator.js:13:10
+Module not found: Can't resolve 'fs'
+[0m [90m 11 |[39m [90m * Module dependencies.[39m
+ [90m 12 |[39m [90m */[39m
+[31m[1m>[22m[39m[90m 13 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 14 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 15 |[39m [36mvar[39m moment [33m=[39m require([32m'moment'[39m)[33m;[39m
+ [90m 16 |[39m [36mvar[39m crypto [33m=[39m require([32m'crypto'[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/file-stream-rotator/FileStreamRotator.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston-daily-rotate-file/daily-rotate-file.js:1:12
+Module not found: Can't resolve 'fs'
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mconst[39m fs [33m=[39m require([32m"fs"[39m)[33m;[39m
+ [90m   |[39m            [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 2 |[39m [36mconst[39m os [33m=[39m require([32m"os"[39m)[33m;[39m
+ [90m 3 |[39m [36mconst[39m path [33m=[39m require([32m"path"[39m)[33m;[39m
+ [90m 4 |[39m [36mconst[39m util [33m=[39m require([32m"util"[39m)[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component Browser:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component Browser]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./node_modules/winston-daily-rotate-file/daily-rotate-file.js [Client Component SSR]
+    ./node_modules/winston-daily-rotate-file/index.js [Client Component SSR]
+    ./src/lib/logger.ts [Client Component SSR]
+    ./src/app/app/page.tsx [Client Component SSR]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/tail-file.js:10:10
+Module not found: Can't resolve 'fs'
+[0m [90m  8 |[39m [32m'use strict'[39m[33m;[39m
+ [90m  9 |[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 11 |[39m [36mvar[39m _require [33m=[39m require([32m'string_decoder'[39m)[33m,[39m
+ [90m 12 |[39m   [33mStringDecoder[39m [33m=[39m _require[33m.[39m[33mStringDecoder[39m[33m;[39m
+ [90m 13 |[39m [36mvar[39m _require2 [33m=[39m require([32m'readable-stream'[39m)[33m,[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/tail-file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./node_modules/winston/dist/winston/transports/file.js:25:10
+Module not found: Can't resolve 'fs'
+[0m [90m 23 |[39m [36mfunction[39m _inherits(t[33m,[39m e) { [36mif[39m ([32m"function"[39m [33m!=[39m [36mtypeof[39m e [33m&&[39m [36mnull[39m [33m!==[39m e) [36mthrow[39m [36mnew[39m [33mTypeError[39m([32m"Super expression must either be null or a function"[39m)[33m;[39m t[33m.[39mprototype [33m=[39m [33mObject[39m[33m.[39mcreate(e [33m&&[39m e[33m.[39mprototype[33m,[39m { constructor[33m:[39m { value[33m:[39m t[33m,[39m writable[33m:[39m [33m![39m[35m0[39m[33m,[39m configurable[33m:[39m [33m![39m[35m0[39m } })[33m,[39m [33mObject[39m[33m.[39mdefineProperty(t[33m,[39m [32m"prototype"[39m[33m,[39m { writable[33m:[39m [33m![39m[35m1[39m })[33m,[39m e [33m&&[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+ [90m 24 |[39m [36mfunction[39m _setPrototypeOf(t[33m,[39m e) { [36mreturn[39m _setPrototypeOf [33m=[39m [33mObject[39m[33m.[39msetPrototypeOf [33m?[39m [33mObject[39m[33m.[39msetPrototypeOf[33m.[39mbind() [33m:[39m [36mfunction[39m (t[33m,[39m e) { [36mreturn[39m t[33m.[39m__proto__ [33m=[39m e[33m,[39m t[33m;[39m }[33m,[39m _setPrototypeOf(t[33m,[39m e)[33m;[39m }
+[31m[1m>[22m[39m[90m 25 |[39m [36mvar[39m fs [33m=[39m require([32m'fs'[39m)[33m;[39m
+ [90m    |[39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+ [90m 26 |[39m [36mvar[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+ [90m 27 |[39m [36mvar[39m asyncSeries [33m=[39m require([32m'async/series'[39m)[33m;[39m
+ [90m 28 |[39m [36mvar[39m zlib [33m=[39m require([32m'zlib'[39m)[33m;[39m[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./node_modules/winston/dist/winston/transports/file.js [Client Component Browser]
+    ./node_modules/winston/dist/winston/transports/index.js [Client Component Browser]
+    ./node_modules/winston/dist/winston.js [Client Component Browser]
+    ./src/lib/logger.ts [Client Component Browser]
+    ./src/app/app/page.tsx [Client Component Browser]
+    ./src/app/app/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+ GET /app 500 in 133ms
+ GET /favicon.ico 500 in 239ms
+ ✓ Compiled in 241ms
+ ✓ Compiled /app in 83ms
+ GET /app 200 in 525ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 535ms
+ GET /?ide_webview_request_time=1755917412835 200 in 233ms
+ ✓ Compiled /_not-found/page in 363ms
+ GET /@vite/client 404 in 514ms
+ GET / 200 in 307ms
+ GET /app 200 in 151ms
+[?25h
