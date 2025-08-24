@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.models.drawing import Drawing
 from app.services.speech_service import SpeechService
 from app.services.image_service import ImageService
-from app.services.cache_service import CacheService
+# from app.services.cache_service import CacheService
 
 class DrawingService:
     """
@@ -16,7 +16,7 @@ class DrawingService:
         self.db = db
         self.speech_service = SpeechService()
         self.image_service = ImageService()
-        self.cache_service = CacheService(db)
+        # self.cache_service = CacheService(db)
     
     async def create_drawing_from_speech(
         self, 
@@ -30,17 +30,17 @@ class DrawingService:
         """
         try:
             # 1. 语音识别
-            import hashlib
-            audio_hash = hashlib.md5(audio_content).hexdigest()
+            # import hashlib
+            # audio_hash = hashlib.md5(audio_content).hexdigest()
             
             # 检查语音识别缓存
-            cached_text = await self.cache_service.get_speech_recognition_cache(audio_hash)
-            if cached_text:
-                recognized_text = cached_text
-            else:
-                recognized_text = await self.speech_service.recognize(audio_content)
+            # cached_text = await self.cache_service.get_speech_recognition_cache(audio_hash)
+            # if cached_text:
+            #     recognized_text = cached_text
+            # else:
+            recognized_text = await self.speech_service.recognize(audio_content)
                 # 缓存语音识别结果
-                await self.cache_service.set_speech_recognition_cache(audio_hash, recognized_text)
+                # await self.cache_service.set_speech_recognition_cache(audio_hash, recognized_text)
             
             # 2. 生成图像
             return await self.create_drawing_from_text(
@@ -64,18 +64,18 @@ class DrawingService:
         """
         try:
             # 1. 检查图像生成缓存
-            cached_images = await self.cache_service.get_image_generation_cache(text, style, steps)
-            if cached_images:
-                image_result = cached_images
-            else:
-                # 2. 生成图像
-                image_result = await self.image_service.generate_step_by_step_drawing(
-                    prompt=text,
-                    style=style,
-                    steps=steps
-                )
-                # 缓存图像生成结果
-                await self.cache_service.set_image_generation_cache(text, style, steps, image_result)
+            # cached_images = await self.cache_service.get_image_generation_cache(text, style, steps)
+            # if cached_images:
+            #     image_result = cached_images
+            # else:
+            # 2. 生成图像
+            image_result = await self.image_service.generate_step_by_step_drawing(
+                prompt=text,
+                style=style,
+                steps=steps
+            )
+            # 缓存图像生成结果
+            # await self.cache_service.set_image_generation_cache(text, style, steps, image_result)
             
             # 3. 保存到数据库
             drawing = Drawing(
@@ -221,7 +221,7 @@ class DrawingService:
             # 获取各服务的状态信息
             speech_info = self.speech_service.get_provider_info()
             image_info = self.image_service.get_provider_info()
-            cache_stats = await self.cache_service.get_stats()
+            # cache_stats = await self.cache_service.get_stats()
             
             # 获取数据库统计
             total_drawings = self.db.query(Drawing).count()
@@ -229,7 +229,7 @@ class DrawingService:
             return {
                 "speech_service": speech_info,
                 "image_service": image_info,
-                "cache_stats": cache_stats,
+                # "cache_stats": cache_stats,
                 "database_stats": {
                     "total_drawings": total_drawings
                 },

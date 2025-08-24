@@ -23,7 +23,7 @@ class ImageService:
         if settings.DASHSCOPE_API_KEY and settings.DASHSCOPE_API_KEY.strip():
             return "tongyi"  # 通义万相
         else:
-            return "mock"  # 开发阶段使用模拟服务
+            raise Exception("未配置DASHSCOPE_API_KEY，无法使用图像生成服务")
     
     async def generate_step_by_step_drawing(
         self, 
@@ -34,10 +34,7 @@ class ImageService:
         """
         生成分步骤简笔画
         """
-        if self.provider == "tongyi":
-            return await self._generate_with_tongyi(prompt, style, steps)
-        else:
-            return await self._mock_generate(prompt, style, steps)
+        return await self._generate_with_tongyi(prompt, style, steps)
     
     async def _generate_with_tongyi(self, prompt: str, style: str, steps: int) -> Dict[str, any]:
         """
@@ -64,8 +61,7 @@ class ImageService:
             }
         except Exception as e:
             print(f"通义万相API调用失败: {e}")
-            # 如果API调用失败，回退到mock数据
-            return await self._mock_generate(prompt, style, steps)
+            raise e
     
     async def _call_tongyi_api(self, prompt: str) -> str:
         """
@@ -118,31 +114,7 @@ class ImageService:
             print(f"通义万相API调用异常: {e}")
             raise e
     
-    async def _mock_generate(self, prompt: str, style: str, steps: int) -> Dict[str, any]:
-        """
-        模拟图像生成（当API调用失败时的备用方案）
-        """
-        # 模拟生成时间
-        await asyncio.sleep(1.5)
-        
-        # 生成模拟的图像URL
-        prompt_hash = abs(hash(prompt)) % 1000
-        base_url = "https://picsum.photos"
-        
-        # 最终完整图像
-        final_image_url = f"{base_url}/400/400?random={prompt_hash}"
-        
-        # 分步骤图像
-        step_images = []
-        for i in range(steps):
-            step_url = f"{base_url}/300/300?random={prompt_hash + i + 1}"
-            step_images.append(step_url)
-        
-        return {
-            "final_image_url": final_image_url,
-            "step_images": step_images,
-            "provider": "mock"
-        }
+
     
     def _optimize_prompt_for_drawing(self, prompt: str, style: str) -> str:
         """
@@ -180,11 +152,6 @@ class ImageService:
                 "name": "通义万相",
                 "description": "阿里云推出的AI图像生成模型，支持万相2.2极速版",
                 "features": ["中文优化", "高质量生成", "多风格支持", "分步骤生成", "真实API调用"]
-            },
-            "mock": {
-                "name": "模拟服务",
-                "description": "当API调用失败时使用的备用图像生成服务",
-                "features": ["快速响应", "无需配置", "备用方案"]
             }
         }
         
@@ -198,18 +165,4 @@ class ImageService:
         生成单张图像
         """
         optimized_prompt = self._optimize_prompt_for_drawing(prompt, style)
-        
-        if self.provider == "tongyi":
-            try:
-                return await self._call_tongyi_api(optimized_prompt)
-            except Exception as e:
-                print(f"通义万相API调用失败: {e}")
-                # 如果API调用失败，回退到mock数据
-                await asyncio.sleep(1.0)
-                prompt_hash = abs(hash(optimized_prompt)) % 1000
-                return f"https://picsum.photos/400/400?random={prompt_hash}"
-        else:
-            # 模拟生成
-            await asyncio.sleep(1.0)
-            prompt_hash = abs(hash(optimized_prompt)) % 1000
-            return f"https://picsum.photos/400/400?random={prompt_hash}"
+        return await self._call_tongyi_api(optimized_prompt)

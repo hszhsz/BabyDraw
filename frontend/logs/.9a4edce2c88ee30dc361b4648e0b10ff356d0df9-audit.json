@@ -9,6 +9,11 @@
             "date": 1755917399779,
             "name": "/Users/heshaozhong/code/BabyDraw/frontend/logs/frontend-error-2025-08-23.log",
             "hash": "608b89ba4939b3665fb6ed40ab270b9e35faa527de4727af9673aec1b40003a7"
+        },
+        {
+            "date": 1755998582438,
+            "name": "/Users/heshaozhong/code/BabyDraw/frontend/logs/frontend-error-2025-08-24.log",
+            "hash": "6ff62c9a4e5613dcd184a0f11d73805ed124a59bb4906b659cf7257256d930c0"
         }
     ],
     "hashType": "sha256"
