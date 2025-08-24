@@ -336,7 +336,7 @@ export default function AppPage() {
       //   console.log('强制刷新，跳过缓存检查');
       // }
 
-      const response = await fetch('http://localhost:8001/api/v1/images/generate', {
+      const response = await fetch('http://localhost:8000/api/v1/images/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -457,7 +457,7 @@ export default function AppPage() {
       //   console.log('强制刷新，跳过缓存检查');
       // }
 
-      const response = await fetch('http://localhost:8001/api/v1/images/generate', {
+      const response = await fetch('http://localhost:8000/api/v1/images/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -589,64 +589,7 @@ export default function AppPage() {
     }
   };
 
-  // 生成测试音频文件
-  const generateTestAudio = () => {
-    // 生成1秒的440Hz正弦波（A音）
-    const sampleRate = 16000;
-    const duration = 1; // 1秒
-    const frequency = 440; // A音
-    const samples = sampleRate * duration;
-    
-    // 创建音频数据
-    const audioData = new Float32Array(samples);
-    for (let i = 0; i < samples; i++) {
-      audioData[i] = Math.sin(2 * Math.PI * frequency * i / sampleRate) * 0.3; // 30%音量
-    }
-    
-    // 转换为16位PCM
-    const pcmData = new Int16Array(audioData.length);
-    for (let i = 0; i < audioData.length; i++) {
-      const sample = Math.max(-1, Math.min(1, audioData[i]));
-      pcmData[i] = sample < 0 ? sample * 0x8000 : sample * 0x7FFF;
-    }
-    
-    // 创建WAV文件头
-    const createWavHeader = (sampleRate: number, channels: number, samples: number) => {
-      const buffer = new ArrayBuffer(44);
-      const view = new DataView(buffer);
-      
-      // RIFF header
-      view.setUint32(0, 0x46464952, true); // "RIFF"
-      view.setUint32(4, 36 + samples * 2, true); // file size
-      view.setUint32(8, 0x45564157, true); // "WAVE"
-      
-      // fmt chunk
-      view.setUint32(12, 0x20746d66, true); // "fmt "
-      view.setUint32(16, 16, true); // chunk size
-      view.setUint16(20, 1, true); // PCM format
-      view.setUint16(22, channels, true); // channels
-      view.setUint32(24, sampleRate, true); // sample rate
-      view.setUint32(28, sampleRate * channels * 2, true); // byte rate
-      view.setUint16(32, channels * 2, true); // block align
-      view.setUint16(34, 16, true); // bits per sample
-      
-      // data chunk
-      view.setUint32(36, 0x61746164, true); // "data"
-      view.setUint32(40, samples * 2, true); // data size
-      
-      return new Uint8Array(buffer);
-    };
-    
-    // 创建WAV文件
-    const header = createWavHeader(sampleRate, 1, audioData.length);
-    const wavData = new Uint8Array(header.length + pcmData.length * 2);
-    wavData.set(header, 0);
-    wavData.set(new Uint8Array(pcmData.buffer), header.length);
-    
-    const testBlob = new Blob([wavData], { type: 'audio/wav' });
-    
-    setAudioBlob(testBlob);
-  };
+
 
   const downloadImage = () => {
     if (currentDrawing && currentDrawing.image_url) {
@@ -841,25 +784,11 @@ export default function AppPage() {
                           <span>停止播放</span>
                         </button>
                       )}
-                      <button
-                        onClick={generateTestAudio}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center space-x-2"
-                      >
-                        🔧 测试音频
-                      </button>
+
                     </div>
                   )}
                   
-                  {!audioBlob && !isProcessingAudio && !isGenerating && (
-                    <div className="flex justify-center">
-                      <button
-                        onClick={generateTestAudio}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center space-x-2"
-                      >
-                        🔧 生成测试音频
-                      </button>
-                    </div>
-                  )}
+
                   
                   {(isProcessingAudio || isGenerating) && (
                     <div className="flex justify-center">
